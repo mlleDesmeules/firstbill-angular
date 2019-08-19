@@ -1,0 +1,19 @@
+<form novalidate [formGroup]="form" (ngSubmit)="save()">
+    <fieldset class="field">
+        <label for="name" class="label">Name</label>
+        <div class="control">
+            <input type="text" id="name" formControlName="name" class="input">
+        </div>
+    </fieldset>
+
+    <fieldset class="field">
+        <label for="duedate" class="label">Due date</label>
+        <div class="control">
+            <input type="text" id="duedate" formControlName="dueDate" class="input">
+        </div>
+    </fieldset>
+
+    <div class="control">
+        <button type="submit" class="button is-link">Save</button>
+    </div>
+</form>

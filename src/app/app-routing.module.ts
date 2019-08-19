@@ -7,10 +7,6 @@ const routes: Routes = [
     {
         path: ``,
         component: DefaultComponent,
-    },
-    {
-        path: `bills`,
-        component: DefaultComponent,
         loadChildren: () => import(`./modules/bills/bills.module`).then(m => m.BillsModule),
     },
 ];
