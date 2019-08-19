@@ -87,7 +87,9 @@
     "use-pipe-transform-interface": true,
     "semicolon": [true, "always"],
     "curly": true,
-    "forin": true
+    "forin": true,
+    "prefer-template": [true, "allow-single-concat"],
+    "eofline": true
   },
   "rulesDirectory": [
     "codelyzer"
