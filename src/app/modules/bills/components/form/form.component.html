@@ -7,11 +7,32 @@
     </fieldset>
 
     <fieldset class="field">
-        <label for="duedate" class="label">Due date</label>
-        <div class="control">
-            <input type="text" id="duedate" formControlName="dueDate" class="input">
+        <label for="amount" class="label">Amount</label>
+        <div class="control has-icons-left">
+            <input type="text" id="amount" formControlName="amount" class="input">
+            <span class="icon is-left">$</span>
         </div>
     </fieldset>
+
+    <div class="columns">
+        <fieldset class="field column is-one-quarter">
+            <label for="duedate" class="label">Next due date</label>
+            <div class="control">
+                <input type="text" id="duedate" formControlName="dueDate" class="input">
+            </div>
+        </fieldset>
+
+        <fieldset class="field column is-one-quarter">
+            <label for="frequency" class="label">Frequency</label>
+            <div class="select">
+                <select id="frequency" formControlName="frequency">
+                    <option *ngFor="let frequency of frequencyList" [value]="frequency.value">
+                        {{frequency.label}}
+                    </option>
+                </select>
+            </div>
+        </fieldset>
+    </div>
 
     <div class="control">
         <button type="submit" class="button is-link">Save</button>
