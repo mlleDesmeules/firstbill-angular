@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { Bill } from '@core/models/bills/bill.model';
-import { FREQUENCIES, FREQUENCY_MONTHLY } from '@core/models/bills/frequency.model';
+import { FREQUENCIES, FREQUENCY_MONTHLY } from '@core/models/bills/frequency';
 import { BillService } from '@core/services/bills/bill.service';
 
 @Component({

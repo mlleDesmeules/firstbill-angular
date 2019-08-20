@@ -14,7 +14,10 @@
     </div>
 
     <footer class="card-footer">
-        <a class="card-footer-item">Mark as paid</a>
-        <a class="card-footer-item">Remove</a>
+        <a (click)="changeStatus(statusList.paid)"
+           *ngIf="bill.status === statusList.unpaid"
+           class="card-footer-item">
+            Mark as paid
+        </a>
     </footer>
 </div>

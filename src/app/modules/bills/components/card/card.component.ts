@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { IBill } from '@core/models/bills/bill.interface';
+import { Bill } from '@core/models/bills/bill.model';
+import { STATUS_PAID, STATUS_UNPAID } from '@core/models/bills/status';
+
+import { BillService } from '@core/services/bills/bill.service';
 
 @Component({
     selector   : `app-bills-card`,
@@ -9,11 +12,29 @@ import { IBill } from '@core/models/bills/bill.interface';
 })
 export class CardComponent implements OnInit {
 
-    @Input(`bill`) bill: IBill;
+    @Input(`bill`) bill: Bill;
 
-    constructor() { }
+    @Output() remove = new EventEmitter();
+
+    public statusList;
+
+    constructor(private service: BillService) { }
 
     ngOnInit() {
+        this._getStatusList();
+    }
+
+    private _getStatusList() {
+        this.statusList = {
+            paid  : STATUS_PAID,
+            unpaid: STATUS_UNPAID,
+        };
+    }
+
+    public changeStatus(status: string) {
+        this.bill.changeStatus(status);
+
+        this.service.update(this.bill.id, this.bill);
     }
 
 }

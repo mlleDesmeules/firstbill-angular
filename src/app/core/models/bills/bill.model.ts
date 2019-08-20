@@ -1,4 +1,5 @@
 import { IBill } from './bill.interface';
+import { STATUS_UNPAID } from '@core/models/bills/status';
 
 export class Bill implements IBill {
     public id;
@@ -18,6 +19,10 @@ export class Bill implements IBill {
         this.amount = Number(data.amount || 0);
         this.dueDate = data.dueDate;
         this.frequency = data.frequency;
-        this.status = data.status || `unpaid`;
+        this.status = data.status || STATUS_UNPAID;
+    }
+
+    changeStatus(status: string) {
+        this.status = status;
     }
 }

@@ -44,15 +44,28 @@ export class BillService {
         const update = this.get().map((item: Bill) => {
             if (item.id === id) {
                 return bill;
+            } else {
+                return item;
             }
         });
 
         BillService._updateStorage(update);
     }
 
-    private _getNextID() {
+    /**
+     * Get next ID
+     *
+     * This method will find the highest ID existing in the list of bills and return the
+     * next possible ID.
+     */
+    private _getNextID(): number {
         const list = this.get();
         const ids  = list.map((item) => item.id);
+
+        //  if there is no IDs
+        if (ids.length === 0) {
+            ids.push(0);
+        }
 
         return Math.max(...ids) + 1;
     }
