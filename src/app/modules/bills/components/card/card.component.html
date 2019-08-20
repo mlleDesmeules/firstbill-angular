@@ -2,7 +2,7 @@
     <div class="card-content">
         <p class="is-marginless">
             <strong>{{ bill.name }}</strong> &nbsp;
-            <small class="tag is-rounded"
+            <small class="tag is-rounded is-pulled-right"
                    [class.is-warning]="bill.status === 'unpaid'"
                    [class.is-success]="bill.status === 'paid'"
                    [class.is-danger]="bill.status === 'overdue'">
@@ -12,4 +12,9 @@
         <p class="is-marginless">amount: ${{bill.amount}}</p>
         <p class="is-marginless">due: {{bill.dueDate}}</p>
     </div>
+
+    <footer class="card-footer">
+        <a class="card-footer-item">Mark as paid</a>
+        <a class="card-footer-item">Remove</a>
+    </footer>
 </div>
