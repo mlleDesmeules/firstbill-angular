@@ -25,10 +25,10 @@ export class FormComponent implements OnInit {
 
     private _createForm() {
         this.form = this.builder.group({
-            name     : [`Test`],
-            amount   : [`120`],
+            name     : [``],
+            amount   : [``],
             frequency: [ FREQUENCY_MONTHLY ],
-            dueDate  : [`2019/09/02`],
+            dueDate  : [``],
         });
     }
 
