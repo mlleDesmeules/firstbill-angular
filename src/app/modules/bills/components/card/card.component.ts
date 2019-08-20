@@ -37,4 +37,8 @@ export class CardComponent implements OnInit {
         this.service.update(this.bill.id, this.bill);
     }
 
+    public removeBill() {
+        this.service.delete(this.bill.id);
+        this.remove.emit();
+    }
 }

@@ -9,7 +9,7 @@
 <div class="columns">
     <div class="column is-one-third">
         <div *ngFor="let item of list">
-            <app-bills-card [bill]="item"></app-bills-card>
+            <app-bills-card [bill]="item" (remove)="updateList()"></app-bills-card>
         </div>
     </div>
 </div>

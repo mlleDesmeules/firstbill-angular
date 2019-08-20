@@ -21,4 +21,8 @@ export class ListComponent implements OnInit {
     private getList() {
         this.list = this.service.get();
     }
+
+    public updateList() {
+        this.getList();
+    }
 }
