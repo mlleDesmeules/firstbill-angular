@@ -3,5 +3,6 @@ export interface IBill {
     name: string;
     amount: number;
     dueDate: string;
+    frequency: string;
     status: string;
 }

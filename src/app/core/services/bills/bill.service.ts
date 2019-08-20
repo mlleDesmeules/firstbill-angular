@@ -29,7 +29,7 @@ export class BillService {
         BillService._updateStorage(result);
     }
 
-    public get(id: number = null): Bill|Bill[] {
+    public get(id: number = null) {
         let result = JSON.parse(localStorage.getItem(BillService.STORAGE_KEY)) || [];
         result     = result.map((item) => new Bill(item));
 
