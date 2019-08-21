@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { Bill } from '@core/models/bills/bill.model';
@@ -10,7 +10,7 @@ import { BillService } from '@core/services/bills/bill.service';
     templateUrl: `./form.component.html`,
     styleUrls  : [ `./form.component.scss` ],
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnChanges {
 
     @Input() bill: Bill;
 
@@ -23,6 +23,10 @@ export class FormComponent implements OnInit {
     ngOnInit() {
         this._createForm();
         this._getFrequencyList();
+    }
+
+    ngOnChanges() {
+        this._createForm();
     }
 
     /**
