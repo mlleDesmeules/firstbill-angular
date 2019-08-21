@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 
 import { Bill } from '@core/models/bills/bill.model';
 import { FREQUENCIES, FREQUENCY_MONTHLY } from '@core/models/bills/frequency';
+import { BillListService } from '@core/services/bills/bill-list.service';
 import { BillService } from '@core/services/bills/bill.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class FormComponent implements OnInit, OnChanges {
     public frequencyList = [];
 
     constructor(private builder: FormBuilder,
+                private listService: BillListService,
                 private service: BillService) { }
 
     ngOnInit() {
@@ -71,9 +73,17 @@ export class FormComponent implements OnInit, OnChanges {
             frequency: this.form.get(`frequency`).value,
         };
 
-        const bill = new Bill(data);
+        if (this.bill.id) {
+            this.bill.update(data);
 
-        this.service.add(bill);
+            this.service.update(this.bill.id, this.bill);
+        } else {
+            const bill = new Bill(data);
+
+            this.service.add(bill);
+        }
+
+        this.listService.triggerUpdate();
     }
 
     /**

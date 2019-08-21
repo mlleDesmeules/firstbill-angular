@@ -5,11 +5,11 @@ import { FREQUENCY_MONTHLY } from '@core/models/bills/frequency';
 
 export class Bill implements IBill {
     public id;
-    public name;
-    public dueDate;
-    public frequency;
-    public status;
-    public amount;
+    public name = ``;
+    public dueDate = ``;
+    public frequency = FREQUENCY_MONTHLY;
+    public status = STATUS_UNPAID;
+    public amount = 0;
 
     constructor(data = null) {
         if (data === null) {
@@ -17,14 +17,19 @@ export class Bill implements IBill {
         }
 
         this.id = Number(data.id || 0);
-        this.name = data.name || ``;
-        this.amount = Number(data.amount || 0);
-        this.dueDate = data.dueDate || ``;
-        this.frequency = data.frequency || FREQUENCY_MONTHLY;
-        this.status = data.status || STATUS_UNPAID;
+
+        this.update(data);
     }
 
     changeStatus(status: string) {
         this.status = status;
+    }
+
+    update(data) {
+        this.name = data.name || this.name;
+        this.amount = Number(data.amount || this.amount);
+        this.dueDate = data.dueDate || this.dueDate;
+        this.frequency = data.frequency || this.frequency;
+        this.status = data.status || this.status;
     }
 }

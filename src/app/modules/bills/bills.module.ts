@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { BillsRoutingModule } from './bills-routing.module';
 import { BillService } from '@core/services/bills/bill.service';
+import { BillListService } from '@core/services/bills/bill-list.service';
 
 import { ListComponent } from './pages/list/list.component';
 import { DetailsComponent } from './pages/details/details.component';
@@ -26,6 +27,7 @@ import { CardComponent } from './components/card/card.component';
     entryComponents: [ ListComponent ],
     providers: [
         BillService,
+        BillListService,
     ],
 })
 export class BillsModule {}

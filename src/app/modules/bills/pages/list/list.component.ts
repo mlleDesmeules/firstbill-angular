@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Bill } from '@core/models/bills/bill.model';
+import { BillListService } from '@core/services/bills/bill-list.service';
 import { BillService } from '@core/services/bills/bill.service';
 
 @Component({
@@ -12,10 +12,17 @@ export class ListComponent implements OnInit {
 
     public list = [];
 
-    constructor(private service: BillService) { }
+    constructor(private service: BillService,
+                private listService: BillListService) { }
 
     ngOnInit() {
         this.getList();
+
+        this.listService
+            .updateList()
+            .subscribe(() => {
+                this.getList();
+            });
     }
 
     private getList() {
