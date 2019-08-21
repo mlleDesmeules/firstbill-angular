@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Bill } from '@core/models/bills/bill.model';
 import { STATUS_PAID, STATUS_UNPAID } from '@core/models/bills/status';
@@ -18,7 +19,8 @@ export class CardComponent implements OnInit {
 
     public statusList;
 
-    constructor(private service: BillService) { }
+    constructor(private service: BillService,
+                private router: Router) { }
 
     ngOnInit() {
         this._getStatusList();
@@ -40,5 +42,9 @@ export class CardComponent implements OnInit {
     public removeBill() {
         this.service.delete(this.bill.id);
         this.remove.emit();
+    }
+
+    public seeDetails() {
+        this.router.navigate([`/${this.bill.id}`]);
     }
 }

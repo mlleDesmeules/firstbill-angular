@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-content">
+    <div class="card-content" (click)="seeDetails()">
         <p class="is-marginless">
             <strong>{{ bill.name }}</strong> &nbsp;
             <small class="tag is-rounded is-pulled-right"
@@ -14,6 +14,10 @@
     </div>
 
     <footer class="card-footer">
+        <a [routerLink]="'/' + bill.id"
+           class="card-footer-item">
+            View
+        </a>
         <a (click)="changeStatus(statusList.paid)"
            *ngIf="bill.status === statusList.unpaid"
            class="card-footer-item">

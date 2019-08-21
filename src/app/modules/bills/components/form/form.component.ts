@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { Bill } from '@core/models/bills/bill.model';
@@ -11,6 +11,8 @@ import { BillService } from '@core/services/bills/bill.service';
     styleUrls  : [ `./form.component.scss` ],
 })
 export class FormComponent implements OnInit {
+
+    @Input() bill: Bill;
 
     public form;
     public frequencyList = [];
@@ -31,10 +33,10 @@ export class FormComponent implements OnInit {
      */
     private _createForm() {
         this.form = this.builder.group({
-            name     : [``],
-            amount   : [``],
-            frequency: [ FREQUENCY_MONTHLY ],
-            dueDate  : [``],
+            name     : [this.bill.name],
+            amount   : [this.bill.amount],
+            frequency: [this.bill.frequency || FREQUENCY_MONTHLY],
+            dueDate  : [this.bill.dueDate],
         });
     }
 

@@ -29,12 +29,13 @@ export class BillService {
         BillService._updateStorage(result);
     }
 
-    public get(id: number = null) {
+    public get(id: number | string = null) {
         let result = JSON.parse(localStorage.getItem(BillService.STORAGE_KEY)) || [];
         result     = result.map((item) => new Bill(item));
 
         if (id) {
-            result = result.filter((val) => val.id === id);
+            result = result.filter((val) => val.id === Number(id));
+            result = result[0] || null;
         }
 
         return result;

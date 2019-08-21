@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BillsRoutingModule } from './bills-routing.module';
-
 import { BillService } from '@core/services/bills/bill.service';
 
 import { ListComponent } from './pages/list/list.component';
