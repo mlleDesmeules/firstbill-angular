@@ -87,6 +87,7 @@ export class FormComponent implements OnInit, OnChanges {
             message    = `A new bill has just been created`;
 
             this.service.add(bill);
+            this.reset();
         }
 
         this.listService.triggerUpdate();
