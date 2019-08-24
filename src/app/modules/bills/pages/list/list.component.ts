@@ -4,32 +4,51 @@ import { BillListService } from '@core/services/bills/bill-list.service';
 import { BillService } from '@core/services/bills/bill.service';
 
 @Component({
-    selector   : `app-list`,
-    templateUrl: `./list.component.html`,
-    styleUrls  : [ `./list.component.scss` ],
+	selector   : `app-list`,
+	templateUrl: `./list.component.html`,
+	styleUrls  : [ `./list.component.scss` ],
 })
 export class ListComponent implements OnInit {
 
-    public list = [];
+	public perPage 	   = 2;
+	public currentPage = 1;
 
-    constructor(private service: BillService,
-                private listService: BillListService) { }
+	public list = [];
+	public partialList = [];
 
-    ngOnInit() {
-        this.getList();
+	constructor(private service: BillService,
+				private listService: BillListService) { }
 
-        this.listService
-            .updateList()
-            .subscribe(() => {
-                this.getList();
-            });
-    }
+	ngOnInit() {
+		this.getList();
 
-    private getList() {
-        this.list = this.service.get();
-    }
+		this.listService
+			.updateList()
+			.subscribe(() => {
+				this.getList();
+			});
+	}
 
-    public updateList() {
-        this.getList();
-    }
+	private getList() {
+		this.list = this.service.get();
+		this.getPartialList();
+	}
+
+	private getPartialList() {
+		const firstItem = (this.currentPage - 1) * this.perPage;
+		const lastItem  = firstItem + this.perPage;
+
+		this.partialList = this.list.filter((val, idx) => {
+			return (idx >= firstItem && idx < lastItem);
+		});
+	}
+
+	public goToPage(pageNumber) {
+		this.currentPage = pageNumber;
+		this.getPartialList();
+	}
+
+	public updateList() {
+		this.getList();
+	}
 }

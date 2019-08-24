@@ -4,8 +4,24 @@
             <a routerLink="/create" class="button is-link is-outlined is-fullwidth">Create</a>
         </div>
 
-        <div *ngFor="let item of list">
+        <div class="has-margin-bottom">
+            <app-pagination [currentPage]="currentPage"
+                            [perPage]="perPage"
+                            [totalItems]="list.length"
+                            (goPage)="goToPage($event)">
+            </app-pagination>
+        </div>
+
+        <div *ngFor="let item of partialList">
             <app-bills-card [bill]="item" (remove)="updateList()"></app-bills-card>
+        </div>
+
+        <div class="has-margin-top">
+            <app-pagination [currentPage]="currentPage"
+                            [perPage]="perPage"
+                            [totalItems]="list.length"
+                            (goPage)="goToPage($event)">
+            </app-pagination>
         </div>
     </div>
     <div class="column">

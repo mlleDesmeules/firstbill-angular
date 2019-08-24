@@ -14,22 +14,22 @@ import { FormComponent } from './components/form/form.component';
 import { CardComponent } from './components/card/card.component';
 
 @NgModule({
-    declarations   : [
-        ListComponent,
-        FormComponent,
-        DetailsComponent,
-        CardComponent,
-    ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        BillsRoutingModule,
-        PaginationModule,
-    ],
-    entryComponents: [ ListComponent ],
-    providers: [
-        BillService,
-        BillListService,
-    ],
+	declarations   : [
+		ListComponent,
+		FormComponent,
+		DetailsComponent,
+		CardComponent,
+	],
+	imports        : [
+		CommonModule,
+		ReactiveFormsModule,
+		BillsRoutingModule,
+		PaginationModule,
+	],
+	entryComponents: [ ListComponent ],
+	providers      : [
+		BillService,
+		BillListService,
+	],
 })
 export class BillsModule {}
