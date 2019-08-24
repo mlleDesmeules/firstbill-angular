@@ -1,0 +1,6 @@
+<div *ngFor="let notification of notifications"
+     class="notification is-floating column is-one-third {{notification.getCSSType()}} {{notification.getCSSPosition()}}">
+    <button class="delete" (click)="remove(notification)"></button>
+    {{notification.message}}
+</div>
+

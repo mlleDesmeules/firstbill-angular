@@ -1,0 +1,28 @@
+.is-floating {
+	position: absolute;
+	z-index: 90;
+}
+
+.is-top {
+	&-left {
+		top: 4rem;
+		left: 1rem;
+	}
+
+	&-right {
+		top: 4rem;
+		right: 1rem;
+	}
+}
+
+.is-bottom {
+	&-left {
+		bottom: 1rem;
+		left: 1rem;
+	}
+
+	&-right {
+		bottom: 1rem;
+		right: 1rem;
+	}
+}
