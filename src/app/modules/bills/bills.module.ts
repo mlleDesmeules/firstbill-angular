@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PaginationModule } from '@shared/pagination/pagination.module';
 
 import { BillsRoutingModule } from './bills-routing.module';
 import { BillService } from '@core/services/bills/bill.service';
@@ -23,6 +24,7 @@ import { CardComponent } from './components/card/card.component';
         CommonModule,
         ReactiveFormsModule,
         BillsRoutingModule,
+        PaginationModule,
     ],
     entryComponents: [ ListComponent ],
     providers: [
