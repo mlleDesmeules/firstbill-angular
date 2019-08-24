@@ -1,0 +1,13 @@
+<nav class="pagination is-small is-borderless" role="navigation" aria-label="pagination">
+    <ul class="pagination-list">
+        <li *ngFor="let page of getPages()">
+            <a *ngIf="isNumber(page)" (click)="goToPage(page)"
+               class="pagination-link"
+               [class.is-current]="page === currentPage">
+                {{page}}
+            </a>
+
+            <span *ngIf="!isNumber(page)" class="pagination-ellipsis" [innerHTML]="page"></span>
+        </li>
+    </ul>
+</nav>
