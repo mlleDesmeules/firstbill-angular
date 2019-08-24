@@ -3,8 +3,10 @@ import { FormBuilder } from '@angular/forms';
 
 import { Bill } from '@core/models/bills/bill.model';
 import { FREQUENCIES, FREQUENCY_MONTHLY } from '@core/models/bills/frequency';
+
 import { BillListService } from '@core/services/bills/bill-list.service';
 import { BillService } from '@core/services/bills/bill.service';
+import { NotificationService } from '@shared/notification/services/notification.service';
 
 @Component({
     selector   : `app-bills-form`,
@@ -20,6 +22,7 @@ export class FormComponent implements OnInit, OnChanges {
 
     constructor(private builder: FormBuilder,
                 private listService: BillListService,
+                private notificationService: NotificationService,
                 private service: BillService) { }
 
     ngOnInit() {
@@ -73,17 +76,21 @@ export class FormComponent implements OnInit, OnChanges {
             frequency: this.form.get(`frequency`).value,
         };
 
+        let message = `Changes to the bill were correctly saved`;
+
         if (this.bill.id) {
             this.bill.update(data);
 
             this.service.update(this.bill.id, this.bill);
         } else {
             const bill = new Bill(data);
+            message    = `A new bill has just been created`;
 
             this.service.add(bill);
         }
 
         this.listService.triggerUpdate();
+        this.notificationService.success(message);
     }
 
     /**
