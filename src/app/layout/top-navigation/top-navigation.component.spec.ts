@@ -7,19 +7,19 @@ describe(`TopNavigationComponent`, () => {
   let fixture: ComponentFixture<TopNavigationComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ TopNavigationComponent ],
-    })
-    .compileComponents();
+	TestBed.configureTestingModule({
+		declarations: [ TopNavigationComponent ],
+	})
+	.compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TopNavigationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+	fixture = TestBed.createComponent(TopNavigationComponent);
+	component = fixture.componentInstance;
+	fixture.detectChanges();
   });
 
   it(`should create`, () => {
-    expect(component).toBeTruthy();
+	expect(component).toBeTruthy();
   });
 });

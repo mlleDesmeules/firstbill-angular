@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { NotificationModule } from './shared/notification/notification.module';
+import { NotificationModule } from '@shared/notification/notification.module';
 
 import { AppComponent } from './app.component';
 
@@ -12,16 +12,16 @@ import { TopNavigationComponent } from './layout/top-navigation/top-navigation.c
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DefaultComponent,
-    FooterComponent,
-    TopNavigationComponent,
+	AppComponent,
+	DefaultComponent,
+	FooterComponent,
+	TopNavigationComponent,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
+	BrowserModule,
+	AppRoutingModule,
 
-    NotificationModule,
+	NotificationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

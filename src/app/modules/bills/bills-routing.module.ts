@@ -7,28 +7,28 @@ import { ListComponent } from './pages/list/list.component';
 import { DetailsComponent } from './pages/details/details.component';
 
 const routes: Routes = [
-    {
-        path     : ``,
-        component: ListComponent,
-        children : [
-            {
-                path     : `create`,
-                component: DetailsComponent,
-            },
-            {
-                path     : `:id`,
-                component: DetailsComponent,
-                resolve  : { bill: BillDetailResolve },
-            },
-        ],
-    },
+	{
+		path     : ``,
+		component: ListComponent,
+		children : [
+			{
+				path     : `create`,
+				component: DetailsComponent,
+			},
+			{
+				path     : `:id`,
+				component: DetailsComponent,
+				resolve  : { bill: BillDetailResolve },
+			},
+		],
+	},
 ];
 
 @NgModule({
-    imports  : [ RouterModule.forChild(routes) ],
-    exports  : [ RouterModule ],
-    providers: [
-        BillDetailResolve,
-    ],
+	imports  : [ RouterModule.forChild(routes) ],
+	exports  : [ RouterModule ],
+	providers: [
+		BillDetailResolve,
+	],
 })
 export class BillsRoutingModule {}

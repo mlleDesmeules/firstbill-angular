@@ -1,61 +1,50 @@
+import { NotificationPositionModel } from './notification-position.model';
+import { NotificationType } from './notification-type.model';
+
 export class Notification {
-    public id: string;
-    public type: NotificationType;
-    public position: NotificationPosition;
-    public message: string;
-    public keepAfterRouteChange: boolean;
+	public id: string;
+	public type: NotificationType;
+	public position: NotificationPositionModel;
+	public message: string;
+	public keepAfterRouteChange: boolean;
 
-    constructor(init?: Partial<Notification>) {
-        Object.assign(this, init);
-    }
+	constructor(init?: Partial<Notification>) {
+		Object.assign(this, init);
+	}
 
-    public getCSSType() {
-        switch (this.type) {
-            case NotificationType.error:
-                return `is-error`;
+	public getCSSType() {
+		switch (this.type) {
+			case NotificationType.error:
+				return `is-error`;
 
-            case NotificationType.info:
-                return `is-info`;
+			case NotificationType.info:
+				return `is-info`;
 
-            case NotificationType.success:
-                return `is-success`;
+			case NotificationType.success:
+				return `is-success`;
 
-            case NotificationType.warning:
-                return `is-warning`;
-        }
+			case NotificationType.warning:
+				return `is-warning`;
+		}
 
-        return ``;
-    }
+		return ``;
+	}
 
-    public getCSSPosition() {
-        switch (this.position) {
-            case NotificationPosition.BOTTOM_LEFT:
-                return `is-bottom-left`;
+	public getCSSPosition() {
+		switch (this.position) {
+			case NotificationPositionModel.BOTTOM_LEFT:
+				return `is-bottom-left`;
 
-            case NotificationPosition.BOTTOM_RIGHT:
-                return `is-bottom-right`;
+			case NotificationPositionModel.BOTTOM_RIGHT:
+				return `is-bottom-right`;
 
-            case NotificationPosition.TOP_LEFT:
-                return `is-top-left`;
+			case NotificationPositionModel.TOP_LEFT:
+				return `is-top-left`;
 
-            case NotificationPosition.TOP_RIGHT:
-                return `is-top-right`;
-        }
+			case NotificationPositionModel.TOP_RIGHT:
+				return `is-top-right`;
+		}
 
-        return ``;
-    }
-}
-
-export enum NotificationType {
-    success,
-    error,
-    info,
-    warning,
-}
-
-export enum NotificationPosition {
-    TOP_LEFT,
-    TOP_RIGHT,
-    BOTTOM_LEFT,
-    BOTTOM_RIGHT,
+		return ``;
+	}
 }

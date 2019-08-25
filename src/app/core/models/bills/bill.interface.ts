@@ -1,8 +1,8 @@
 export interface IBill {
-    id: number;
-    name: string;
-    amount: number;
-    dueDate: string;
-    frequency: string;
-    status: string;
+	id: number;
+	name: string;
+	amount: number;
+	dueDate: string;
+	frequency: string;
+	status: string;
 }

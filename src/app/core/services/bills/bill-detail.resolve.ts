@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class BillDetailResolve implements Resolve<Bill> {
 
-    constructor(private service: BillService) { }
+	constructor(private service: BillService) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Bill> | Promise<Bill> | Bill {
-        return this.service.get(route.paramMap.get(`id`));
-    }
+	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Bill> | Promise<Bill> | Bill {
+		return this.service.get(route.paramMap.get(`id`));
+	}
 }
