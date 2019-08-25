@@ -1,4 +1,3 @@
-/* tslint:disable:align */
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
@@ -8,6 +7,9 @@ import { FREQUENCIES, FREQUENCY_MONTHLY } from '@core/models/bills/frequency';
 import { BillListService } from '@core/services/bills/bill-list.service';
 import { BillService } from '@core/services/bills/bill.service';
 import { NotificationService } from '@shared/notification/services/notification.service';
+
+import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js';
+
 
 @Component({
 	selector   : `app-bills-form`,
@@ -20,6 +22,7 @@ export class FormComponent implements OnInit, OnChanges {
 
 	public form;
 	public frequencyList = [];
+	private calendars: any[];
 
 	constructor(private builder: FormBuilder,
 				private listService: BillListService,
@@ -27,12 +30,15 @@ export class FormComponent implements OnInit, OnChanges {
 				private service: BillService) { }
 
 	ngOnInit() {
-		this._createForm();
 		this._getFrequencyList();
 	}
 
 	ngOnChanges() {
 		this._createForm();
+	}
+
+	private _attachCalendar() {
+		this.calendars = bulmaCalendar.attach(`[type="date"]`);
 	}
 
 	/**
@@ -48,6 +54,8 @@ export class FormComponent implements OnInit, OnChanges {
 			frequency: [ this.bill.frequency || FREQUENCY_MONTHLY ],
 			dueDate  : [ this.bill.dueDate ],
 		});
+
+		this._attachCalendar();
 	}
 
 	/**
@@ -73,7 +81,7 @@ export class FormComponent implements OnInit, OnChanges {
 		const data = {
 			name     : this.form.get(`name`).value,
 			amount   : this.form.get(`amount`).value,
-			dueDate  : this.form.get(`dueDate`).value,
+			dueDate  : this.calendars[0].value(),
 			frequency: this.form.get(`frequency`).value,
 		};
 
@@ -104,4 +112,5 @@ export class FormComponent implements OnInit, OnChanges {
 	public reset() {
 		this._createForm();
 	}
+
 }
