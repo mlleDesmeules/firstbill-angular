@@ -54,7 +54,17 @@ export class PaginationComponent implements OnInit {
 	}
 
 	goToPage(page) {
-		this.goPage.emit(page);
+		if (page >= 1 && page <= this.getTotalPages()) {
+			this.goPage.emit(page);
+		}
+	}
+
+	isFirstPage(): boolean {
+		return this.currentPage === 1;
+	}
+
+	isLastPage(): boolean {
+		return this.currentPage === this.getTotalPages();
 	}
 
 	isNumber(name): boolean {

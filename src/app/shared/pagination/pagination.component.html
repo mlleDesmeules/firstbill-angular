@@ -1,4 +1,10 @@
-<nav class="pagination is-small is-borderless" role="navigation" aria-label="pagination">
+<nav class="pagination is-small is-centered is-borderless" role="navigation" aria-label="pagination">
+    <a *ngIf="!isFirstPage()" class="pagination-previous" (click)="goToPage(currentPage - 1)"> Previous </a>
+    <a *ngIf="isFirstPage()" class="pagination-previous" (click)="goToPage(currentPage - 1)" disabled> Previous </a>
+
+    <a *ngIf="!isLastPage()" class="pagination-next" (click)="goToPage(currentPage + 1)">Next page</a>
+    <a *ngIf="isLastPage()" class="pagination-next" (click)="goToPage(currentPage + 1)" disabled="">Next page</a>
+
     <ul class="pagination-list">
         <li *ngFor="let page of getPages()">
             <a *ngIf="isNumber(page)" (click)="goToPage(page)"
