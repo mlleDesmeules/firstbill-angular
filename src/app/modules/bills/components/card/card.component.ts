@@ -5,6 +5,8 @@ import { Bill } from '@core/models/bills/bill.model';
 import { STATUS_PAID, STATUS_UNPAID } from '@core/models/bills/status';
 
 import { BillService } from '@core/services/bills/bill.service';
+import { BillListService } from '@core/services/bills/bill-list.service';
+import { NotificationService } from '@shared/notification/services/notification.service';
 
 @Component({
 	selector   : `app-bills-card`,
@@ -20,6 +22,8 @@ export class CardComponent implements OnInit {
 	public statusList;
 
 	constructor(private service: BillService,
+				private listService: BillListService,
+				private notificationService: NotificationService,
 				private router: Router) { }
 
 	ngOnInit() {
@@ -41,6 +45,9 @@ export class CardComponent implements OnInit {
 		} else {
 			this.service.update(this.bill.id, this.bill);
 		}
+
+		this.listService.triggerUpdate();
+		this.notificationService.success(`The ${this.bill.name} bill was successfully marked as ${status}`);
 	}
 
 	public removeBill() {

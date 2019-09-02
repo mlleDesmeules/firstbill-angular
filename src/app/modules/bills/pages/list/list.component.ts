@@ -10,7 +10,7 @@ import { BillService } from '@core/services/bills/bill.service';
 })
 export class ListComponent implements OnInit {
 
-	public perPage 	   = 2;
+	public perPage 	   = 5;
 	public currentPage = 1;
 
 	public list = [];
