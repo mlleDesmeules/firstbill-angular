@@ -41,6 +41,14 @@ export class BillService {
 		return result;
 	}
 
+	public markPaid(id: number, bill: Bill) {
+		this.update(id, bill);
+
+		const nextBill = bill.getNextBill();
+
+		this.add(nextBill);
+	}
+
 	public update(id: number, bill: Bill) {
 		const update = this.get().map((item: Bill) => {
 			if (item.id === id) {

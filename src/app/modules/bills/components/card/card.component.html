@@ -10,7 +10,7 @@
             </small>
         </p>
         <p class="is-marginless">amount: ${{bill.amount}}</p>
-        <p class="is-marginless">due: {{bill.dueDate}}</p>
+        <p class="is-marginless">due: {{bill.dueDate | date:'longDate' }}</p>
     </div>
 
     <footer class="card-footer">

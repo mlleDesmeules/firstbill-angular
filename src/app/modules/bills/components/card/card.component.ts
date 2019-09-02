@@ -36,7 +36,11 @@ export class CardComponent implements OnInit {
 	public changeStatus(status: string) {
 		this.bill.changeStatus(status);
 
-		this.service.update(this.bill.id, this.bill);
+		if (status === STATUS_PAID) {
+			this.service.markPaid(this.bill.id, this.bill);
+		} else {
+			this.service.update(this.bill.id, this.bill);
+		}
 	}
 
 	public removeBill() {
