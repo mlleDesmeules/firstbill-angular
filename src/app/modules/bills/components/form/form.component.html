@@ -6,13 +6,19 @@
         </div>
     </fieldset>
 
-    <fieldset class="field">
-        <label for="amount" class="label">Amount</label>
-        <div class="control has-icons-left">
-            <input type="text" id="amount" formControlName="amount" class="input">
-            <span class="icon is-left">$</span>
-        </div>
-    </fieldset>
+    <div class="columns">
+        <fieldset class="field column">
+            <label for="amount" class="label">Amount</label>
+            <div class="control has-icons-left">
+                <input type="text" id="amount" formControlName="amount" class="input">
+                <span class="icon is-left">$</span>
+            </div>
+        </fieldset>
+        <fieldset class="field column is-autopay">
+            <input class="is-checkradio" id="autoPay" type="checkbox" formControlName="autoPay">
+            <label for="autoPay">Auto pay</label>
+        </fieldset>
+    </div>
 
     <div class="columns">
         <fieldset class="field column">

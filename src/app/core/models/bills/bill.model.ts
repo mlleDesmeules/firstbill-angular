@@ -13,12 +13,9 @@ export class Bill implements IBill {
 	public status = STATUS_UNPAID;
 	public amount = 0;
 	public previousBillId: number;
+	public autoPay = 0;
 
-	constructor(data = null) {
-		if (data === null) {
-			return;
-		}
-
+	constructor(data: Partial<Bill>) {
 		this.id = Number(data.id || 0);
 
 		this.update(data);
@@ -39,12 +36,8 @@ export class Bill implements IBill {
 		return nextBill;
 	}
 
-	update(data) {
-		this.name = data.name || this.name;
-		this.amount = Number(data.amount || this.amount);
-		this.dueDate = data.dueDate || this.dueDate;
-		this.frequency = data.frequency || this.frequency;
-		this.status = data.status || this.status;
+	update(data: Partial<Bill>) {
+		Object.assign(this, data);
 	}
 
 	setNextDueDate() {

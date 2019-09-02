@@ -53,6 +53,7 @@ export class FormComponent implements OnInit, OnChanges {
 			amount   : [ this.bill.amount ],
 			frequency: [ this.bill.frequency || FREQUENCY_MONTHLY ],
 			dueDate  : [ this.bill.dueDate ],
+			autoPay  : [ this.bill.autoPay ],
 		});
 
 		this._attachCalendar();
@@ -83,7 +84,10 @@ export class FormComponent implements OnInit, OnChanges {
 			amount   : this.form.get(`amount`).value,
 			dueDate  : this.calendars[0].value(),
 			frequency: this.form.get(`frequency`).value,
+			autoPay  : Number(this.form.get(`autoPay`).value),
 		};
+
+		console.log(data);
 
 		let message = `Changes to the bill were correctly saved`;
 
