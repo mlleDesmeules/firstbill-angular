@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [class.has-background-light]="isActive">
     <div class="card-content" (click)="seeDetails()">
         <p class="is-marginless">
             <strong>{{ bill.name }}</strong> &nbsp;

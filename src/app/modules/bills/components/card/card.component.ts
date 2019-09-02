@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ActivationEnd, NavigationEnd, Router } from '@angular/router';
 
 import { Bill } from '@core/models/bills/bill.model';
 import { STATUS_PAID, STATUS_UNPAID } from '@core/models/bills/status';
@@ -20,14 +20,18 @@ export class CardComponent implements OnInit {
 	@Output() remove = new EventEmitter();
 
 	public statusList;
+	public isActive = false;
 
 	constructor(private service: BillService,
 				private listService: BillListService,
 				private notificationService: NotificationService,
-				private router: Router) { }
+				private router: Router,
+				private route: ActivatedRoute) { }
 
 	ngOnInit() {
 		this._getStatusList();
+
+		this._isActive();
 	}
 
 	private _getStatusList() {
@@ -48,6 +52,27 @@ export class CardComponent implements OnInit {
 
 		this.listService.triggerUpdate();
 		this.notificationService.success(`The ${this.bill.name} bill was successfully marked as ${status}`);
+	}
+
+	_isActive() {
+		let params = null;
+
+		this.route.url.subscribe(() => {
+			const data 	  = this.route.snapshot.firstChild.data;
+			this.isActive = (Number(data.bill.id) === this.bill.id);
+		});
+
+		this.router.events.subscribe((event) => {
+			if (event instanceof ActivationEnd && params === null) {
+				params = event.snapshot.params;
+			}
+
+			if (event instanceof NavigationEnd && params) {
+				this.isActive = (Number(params.id) === this.bill.id);
+
+				params = null;
+			}
+		});
 	}
 
 	public removeBill() {
