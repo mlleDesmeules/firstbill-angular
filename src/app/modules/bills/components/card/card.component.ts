@@ -58,8 +58,10 @@ export class CardComponent implements OnInit {
 		let params = null;
 
 		this.route.url.subscribe(() => {
-			const data 	  = this.route.snapshot.firstChild.data;
-			this.isActive = (Number(data.bill.id) === this.bill.id);
+			if (this.route.snapshot.firstChild && this.route.snapshot.firstChild.data) {
+				const data = this.route.snapshot.firstChild.data;
+				this.isActive = (Number(data.bill.id) === this.bill.id);
+			}
 		});
 
 		this.router.events.subscribe((event) => {
