@@ -1,0 +1,70 @@
+<div class="datetimepicker is-active">
+    <div class="datetimepicker-container">
+
+        <div class="datetimepicker-header is-date-only">
+            <div class="datetimepicker-selection-details">
+                <div class="datetimepicker-selection-start is-centered">
+                    <div class="datetimepicker-selection-wrapper">
+                        <div class="datetimepicker-selection-day">
+                            {{ selectedDate.format('DD') }}
+                        </div>
+                        <div class="datetimepicker-selection-date">
+                            <div class="datetimepicker-selection-month">
+                                {{ selectedDate.format('MMMM YYYY') }}
+                            </div>
+                            <div class="datetimepicker-selection-weekday">
+                                {{ selectedDate.format('dddd') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="datepicker is-active">
+            <div class="datepicker-nav">
+                <button type="button" class="datepicker-nav-previous button is-small is-text"
+                        (click)="changeNavMonth(-1)">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+
+                <div class="datepicker-nav-month-year">
+                    <div class="datepicker-nav-month">
+                        {{ navDate.format('MMMM') }}
+                    </div>
+                    &nbsp;
+                    <div class="datepicker-nav-year">
+                        {{ navDate.format('YYYY') }}
+                    </div>
+                </div>
+
+                <button type="button" class="datepicker-nav-next button is-small is-text"
+                        (click)="changeNavMonth(1)">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="datepicker-body">
+                <div class="datepicker-dates is-active">
+                    <div class="datepicker-weekdays">
+                        <div *ngFor="let day of getWeekdays()" class="datepicker-date">
+                            {{day}}
+                        </div>
+                    </div>
+
+                    <div class="datepicker-days">
+                        <div *ngFor="let date of getDays()" class="datepicker-date"
+                             [class.is-current-month]="date.value !== null"
+                             [class.is-disabled]="!date.available">
+                            <button type="button" class="date-item"
+                                    [class.is-active]="isSelected(date.fullDate)"
+                                    (click)="selectDate(date.fullDate)">
+                                {{ date.value }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
