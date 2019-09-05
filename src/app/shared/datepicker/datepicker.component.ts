@@ -15,7 +15,6 @@ export class DatepickerComponent implements OnInit {
 
 	ngOnInit() {
 		this.navDate = moment();
-		this.selectedDate = moment();
 
 		this.getDays();
 	}
@@ -44,10 +43,13 @@ export class DatepickerComponent implements OnInit {
 				day = (i - startEmpty + 1);
 			}
 
+			const date = moment(moment(this.navDate).date(day));
+
 			list.push({
 				value    : day,
 				available: (day !== null),
-				fullDate : moment(moment(this.navDate).date(day)).toISOString(),
+				isToday  : date.isSame(moment(), `day`),
+				fullDate : date.toISOString(),
 			});
 		}
 

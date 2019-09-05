@@ -6,14 +6,14 @@
                 <div class="datetimepicker-selection-start is-centered">
                     <div class="datetimepicker-selection-wrapper">
                         <div class="datetimepicker-selection-day">
-                            {{ selectedDate.format('DD') }}
+                            {{ selectedDate?.format('DD') }}
                         </div>
                         <div class="datetimepicker-selection-date">
                             <div class="datetimepicker-selection-month">
-                                {{ selectedDate.format('MMMM YYYY') }}
+                                {{ selectedDate?.format('MMMM YYYY') }}
                             </div>
                             <div class="datetimepicker-selection-weekday">
-                                {{ selectedDate.format('dddd') }}
+                                {{ selectedDate?.format('dddd') }}
                             </div>
                         </div>
                     </div>
@@ -58,6 +58,7 @@
                              [class.is-disabled]="!date.available">
                             <button type="button" class="date-item"
                                     [class.is-active]="isSelected(date.fullDate)"
+                                    [class.is-today]="date.isToday"
                                     (click)="selectDate(date.fullDate)">
                                 {{ date.value }}
                             </button>
