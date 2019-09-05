@@ -49,22 +49,16 @@ export class DatepickerComponent implements OnInit {
 				day = moment(this.navDate).date(i - startEmpty + 1);
 			}
 
-			console.log(this._getDayObject(day));
-
-			list.push(this._getDayObject(day));
+			list.push({
+				value       : day.date(),
+				available   : true,
+				fullDate    : day.toISOString(),
+				isToday     : day.isSame(moment(), `day`) && day.isSame(moment(), `month`),
+				currentMonth: day.isSame(this.navDate, `month`),
+			});
 		}
 
 		return list;
-	}
-
-	_getDayObject(day) {
-		return {
-			value       : day.date(),
-			available   : true,
-			fullDate    : day.toISOString(),
-			isToday     : day.isSame(moment(), `day`) && day.isSame(moment(), `month`),
-			currentMonth: day.isSame(this.navDate, `month`),
-		};
 	}
 
 	getWeekdays(): string[] {
