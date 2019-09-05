@@ -73,10 +73,30 @@ export class DatepickerComponent implements OnInit {
 	}
 
 	isSelected(date: string): boolean {
-		return (date === moment(this.selectedDate).toISOString());
+		if (!this.selectedDate) {
+			return false;
+		}
+
+		const day   = moment(date).isSame(this.selectedDate, `day`);
+		const month = moment(date).isSame(this.selectedDate, `month`);
+		const year  = moment(date).isSame(this.selectedDate, `year`);
+
+		return (day && month && year);
 	}
 
 	selectDate(date: string) {
 	  	this.selectedDate = moment(date);
+	}
+
+	selectToday() {
+		this.selectDate(moment().toISOString());
+	}
+
+	clearSelection() {
+		this.selectedDate = null;
+	}
+
+	cancelChanges() {
+		// TODO revert selectedDate to original value
 	}
 }

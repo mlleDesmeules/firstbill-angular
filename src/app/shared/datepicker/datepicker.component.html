@@ -67,5 +67,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="datetimepicker-footer">
+            <button type="button" class="datetimepicker-footer-today has-text-warning button is-small is-text"
+                    (click)="selectToday()">
+                Today
+            </button>
+            <button type="button" class="datetimepicker-footer-clear has-text-danger button is-small is-text"
+                    (click)="clearSelection()">
+                Clear
+            </button>
+            <button type="button" class="datetimepicker-footer-cancel button is-small is-text"
+                    (click)="cancelChanges()">
+                Cancel
+            </button>
+        </div>
     </div>
 </div>
