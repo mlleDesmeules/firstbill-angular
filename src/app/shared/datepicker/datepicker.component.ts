@@ -37,23 +37,34 @@ export class DatepickerComponent implements OnInit {
 		for (let i = 0; i < gridSize; i++) {
 			let day = null;
 
-			if (i < startEmpty || i >= gridSize - lastEmpty) {
-				day = null;
+			if (i < startEmpty) {
+				const lastMonth = moment(this.navDate).subtract(1, `months`);
+
+				day = lastMonth.endOf(`month`).subtract(startEmpty - i - 1, `days`);
+			} else if (i >= gridSize - lastEmpty) {
+				const nextMonth = moment(this.navDate).add(1, `months`);
+
+				day = nextMonth.startOf(`month`).add(i - (gridSize - lastEmpty), `days`);
 			} else {
-				day = (i - startEmpty + 1);
+				day = moment(this.navDate).date(i - startEmpty + 1);
 			}
 
-			const date = moment(moment(this.navDate).date(day));
+			console.log(this._getDayObject(day));
 
-			list.push({
-				value    : day,
-				available: (day !== null),
-				isToday  : date.isSame(moment(), `day`),
-				fullDate : date.toISOString(),
-			});
+			list.push(this._getDayObject(day));
 		}
 
 		return list;
+	}
+
+	_getDayObject(day) {
+		return {
+			value       : day.date(),
+			available   : true,
+			fullDate    : day.toISOString(),
+			isToday     : day.isSame(moment(), `day`) && day.isSame(moment(), `month`),
+			currentMonth: day.isSame(this.navDate, `month`),
+		};
 	}
 
 	getWeekdays(): string[] {
