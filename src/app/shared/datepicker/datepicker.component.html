@@ -1,4 +1,6 @@
-<div class="datetimepicker is-active">
+<input type="text" class="input" (focus)="pickerOpen = true" [formControl]="dateInput">
+
+<div class="datetimepicker" [class.is-active]="pickerOpen">
     <div class="datetimepicker-container">
 
         <div class="datetimepicker-header is-date-only">
@@ -6,14 +8,15 @@
                 <div class="datetimepicker-selection-start is-centered">
                     <div class="datetimepicker-selection-wrapper">
                         <div class="datetimepicker-selection-day">
-                            {{ selectedDate?.format('DD') }}
+                            {{ formatSelectedDate('date') }}
                         </div>
                         <div class="datetimepicker-selection-date">
                             <div class="datetimepicker-selection-month">
-                                {{ selectedDate?.format('MMMM YYYY') }}
+                                {{ formatSelectedDate('month') }}
+
                             </div>
                             <div class="datetimepicker-selection-weekday">
-                                {{ selectedDate?.format('dddd') }}
+                                {{ formatSelectedDate('day') }}
                             </div>
                         </div>
                     </div>
@@ -21,7 +24,7 @@
             </div>
         </div>
 
-        <div class="datepicker is-active">
+        <div class="datepicker" [class.is-active]="pickerOpen">
             <div class="datepicker-nav">
                 <button type="button" class="datepicker-nav-previous button is-small is-text"
                         (click)="changeNavMonth(-1)">
@@ -30,11 +33,11 @@
 
                 <div class="datepicker-nav-month-year">
                     <div class="datepicker-nav-month">
-                        {{ navDate.format('MMMM') }}
+                        {{ displayedMonth.format('MMMM') }}
                     </div>
                     &nbsp;
                     <div class="datepicker-nav-year">
-                        {{ navDate.format('YYYY') }}
+                        {{ displayedMonth.format('YYYY') }}
                     </div>
                 </div>
 
@@ -47,7 +50,7 @@
             <div class="datepicker-body">
                 <div class="datepicker-dates is-active">
                     <div class="datepicker-weekdays">
-                        <div *ngFor="let day of getWeekdays()" class="datepicker-date">
+                        <div *ngFor="let day of weekdays" class="datepicker-date">
                             {{day}}
                         </div>
                     </div>

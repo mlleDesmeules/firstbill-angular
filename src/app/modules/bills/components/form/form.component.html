@@ -24,7 +24,7 @@
         <fieldset class="field column">
             <label for="duedate" class="label">Next due date</label>
             <div class="control">
-                <input type="date" id="duedate" formControlName="dueDate" class="input">
+                <app-datepicker [formControl]="form.controls.dueDate"></app-datepicker>
             </div>
         </fieldset>
 

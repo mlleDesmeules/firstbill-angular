@@ -9,7 +9,7 @@ import { BillService } from '@core/services/bills/bill.service';
 import { NotificationService } from '@shared/notification/services/notification.service';
 
 import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js';
-
+import * as moment from 'moment';
 
 @Component({
 	selector   : `app-bills-form`,
@@ -38,7 +38,6 @@ export class FormComponent implements OnInit, OnChanges {
 	}
 
 	private _attachCalendar() {
-		this.calendars = bulmaCalendar.attach(`[type="date"]`);
 	}
 
 	/**
@@ -82,7 +81,7 @@ export class FormComponent implements OnInit, OnChanges {
 		const data = {
 			name     : this.form.get(`name`).value,
 			amount   : this.form.get(`amount`).value,
-			dueDate  : this.calendars[0].value(),
+			dueDate  : this.form.get(`dueDate`).value,
 			frequency: this.form.get(`frequency`).value,
 			autoPay  : Number(this.form.get(`autoPay`).value),
 		};

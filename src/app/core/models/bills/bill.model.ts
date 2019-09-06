@@ -25,6 +25,10 @@ export class Bill implements IBill {
 		this.status = status;
 	}
 
+	getDate() {
+		return this.dueDate ? moment(this.dueDate, `MM/DD/YYYY`).toString() : ``;
+	}
+
 	getNextBill() {
 		const nextBill = new Bill(this);
 
@@ -38,6 +42,8 @@ export class Bill implements IBill {
 
 	update(data: Partial<Bill>) {
 		Object.assign(this, data);
+
+		this.dueDate = this.dueDate ? moment(this.dueDate).toISOString() : ``;
 	}
 
 	setNextDueDate() {

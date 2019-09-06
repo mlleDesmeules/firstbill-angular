@@ -1,36 +1,102 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
 	selector   : `app-datepicker`,
 	templateUrl: `./datepicker.component.html`,
 	styleUrls  : [ `./datepicker.component.scss` ],
+	providers  : [
+		{
+			provide    : NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => DatepickerComponent),
+			multi      : true,
+		},
+	],
 })
-export class DatepickerComponent implements OnInit {
+export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
-	selectedDate: any;
-	navDate: any;
+	pickerOpen = false;
+	dateInput: FormControl;
+	days: any[] = [];
+	weekdays: string[] = [];
+
+	displayedMonth: any;
+
+	@Input()
+	_selectedDate: any;
+
+	get selectedDate() {
+		return this._selectedDate ? moment(this._selectedDate) : ``;
+	}
+
+	set selectedDate(value: any) {
+		this._selectedDate = value;
+		this.dateInput.setValue(this.formatSelectedDate());
+		this.propagateChange(this._selectedDate);
+	}
+
+	propagateChange = (_: any) => {};
 
 	constructor() { }
 
 	ngOnInit() {
-		this.navDate = moment();
+		this.displayedMonth = moment();
+		this.dateInput 		= new FormControl(``);
 
-		this.getDays();
+		this.weekdays = this.getWeekdays();
+		this.days 	  = this.getDays();
+	}
+
+	writeValue(value: any): void {
+		this.selectedDate = value;
+	}
+
+	registerOnChange(fn: any): void {
+		this.propagateChange = fn;
+	}
+
+	registerOnTouched() {}
+
+	cancelChanges() {
+		// TODO revert selectedDate to original value
+		this.pickerOpen = false;
 	}
 
 	changeNavMonth(num: number) {
-		this.navDate.add(num, `month`);
+		this.displayedMonth.add(num, `month`);
+		this.days = this.getDays();
+	}
+
+	clearSelection() {
+		this.selectedDate = null;
+	}
+
+	formatSelectedDate(format?: string): string {
+		if (!this.selectedDate) {
+			return format === `date` ? `-` : ``;
+		}
+
+		switch (format) {
+			case `date`:
+				return this.selectedDate.format(`DD`);
+			case `month`:
+				return this.selectedDate.format(`MMMM YYYY`);
+			case `day`:
+				return this.selectedDate.format(`dddd`);
+			default:
+				return this.selectedDate.format(`DD/MM/YYYY`);
+		}
 	}
 
 	getDays(): any[] {
-		const firstDay  = moment(this.navDate).startOf(`month`);
-		const lastDay   = moment(this.navDate).endOf(`month`);
+		const firstDay  = moment(this.displayedMonth).startOf(`month`);
+		const lastDay   = moment(this.displayedMonth).endOf(`month`);
 
 		const startEmpty = firstDay.weekday();
 		const lastEmpty  = 6 - lastDay.weekday();
 
-		const gridSize = startEmpty + lastEmpty + moment(this.navDate).daysInMonth();
+		const gridSize = startEmpty + lastEmpty + moment(this.displayedMonth).daysInMonth();
 
 		const list = [];
 
@@ -38,23 +104,25 @@ export class DatepickerComponent implements OnInit {
 			let day = null;
 
 			if (i < startEmpty) {
-				const lastMonth = moment(this.navDate).subtract(1, `months`);
+				const lastMonth = moment().utc(this.displayedMonth).subtract(1, `months`);
 
 				day = lastMonth.endOf(`month`).subtract(startEmpty - i - 1, `days`);
 			} else if (i >= gridSize - lastEmpty) {
-				const nextMonth = moment(this.navDate).add(1, `months`);
+				const nextMonth = moment().utc(this.displayedMonth).add(1, `months`);
 
 				day = nextMonth.startOf(`month`).add(i - (gridSize - lastEmpty), `days`);
 			} else {
-				day = moment(this.navDate).date(i - startEmpty + 1);
+				day = moment().utc(this.displayedMonth).date(i - startEmpty + 1);
 			}
+
+			console.log('here');
 
 			list.push({
 				value       : day.date(),
 				available   : true,
 				fullDate    : day.toISOString(),
 				isToday     : day.isSame(moment(), `day`) && day.isSame(moment(), `month`),
-				currentMonth: day.isSame(this.navDate, `month`),
+				currentMonth: day.isSame(this.displayedMonth, `month`),
 			});
 		}
 
@@ -85,18 +153,10 @@ export class DatepickerComponent implements OnInit {
 	}
 
 	selectDate(date: string) {
-	  	this.selectedDate = moment(date);
+	  	this.selectedDate = moment(date).toISOString();
 	}
 
 	selectToday() {
 		this.selectDate(moment().toISOString());
-	}
-
-	clearSelection() {
-		this.selectedDate = null;
-	}
-
-	cancelChanges() {
-		// TODO revert selectedDate to original value
 	}
 }
