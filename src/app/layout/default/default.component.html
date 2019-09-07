@@ -1,9 +1,11 @@
-<app-layout-top-navigation></app-layout-top-navigation>
+<div class="has-sticky-footer">
+    <app-layout-top-navigation></app-layout-top-navigation>
 
-<div class="container is-fluid">
-    <router-outlet></router-outlet>
+    <div class="container is-fluid">
+        <router-outlet></router-outlet>
+
+        <app-notification></app-notification>
+    </div>
+
+    <app-layout-footer></app-layout-footer>
 </div>
-
-<app-notification></app-notification>
-
-<app-layout-footer></app-layout-footer>
