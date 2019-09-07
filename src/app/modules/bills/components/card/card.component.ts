@@ -59,8 +59,8 @@ export class CardComponent implements OnInit {
 
 		this.route.url.subscribe(() => {
 			if (this.route.snapshot.firstChild && this.route.snapshot.firstChild.data) {
-				const data = this.route.snapshot.firstChild.data;
-				this.isActive = (Number(data.bill.id) === this.bill.id);
+				const data 	  = this.route.snapshot.firstChild.data;
+				this.isActive = (data.bill && (Number(data.bill.id) === this.bill.id));
 			}
 		});
 
