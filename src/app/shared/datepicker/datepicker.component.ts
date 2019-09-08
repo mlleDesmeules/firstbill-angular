@@ -16,6 +16,7 @@ import * as moment from 'moment';
 })
 export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
+	pickerOpen = false;
 	dateInput: FormControl;
 	navDate: any;
 

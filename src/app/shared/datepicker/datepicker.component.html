@@ -1,7 +1,7 @@
-<input type="text" class="input" [formControl]="dateInput">
+<input type="text" class="input" [formControl]="dateInput" (click)="pickerOpen = true">
 
 
-<div class="datetimepicker is-active">
+<div class="datetimepicker is-primary is-datetimepicker-default" [class.is-active]="pickerOpen">
     <div class="datetimepicker-container">
 
         <div class="datetimepicker-header is-date-only">
