@@ -16,12 +16,8 @@ import * as moment from 'moment';
 })
 export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
-	pickerOpen = false;
 	dateInput: FormControl;
-	days: any[] = [];
-	weekdays: string[] = [];
-
-	displayedMonth: any;
+	navDate: any;
 
 	@Input()
 	_selectedDate: any;
@@ -41,11 +37,8 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	constructor() { }
 
 	ngOnInit() {
-		this.displayedMonth = moment();
-		this.dateInput 		= new FormControl(``);
-
-		this.weekdays = this.getWeekdays();
-		this.days 	  = this.getDays();
+		this.navDate   = moment();
+		this.dateInput = new FormControl(``);
 	}
 
 	writeValue(value: any): void {
@@ -58,18 +51,8 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
 	registerOnTouched() {}
 
-	cancelChanges() {
-		// TODO revert selectedDate to original value
-		this.pickerOpen = false;
-	}
-
 	changeNavMonth(num: number) {
-		this.displayedMonth.add(num, `month`);
-		this.days = this.getDays();
-	}
-
-	clearSelection() {
-		this.selectedDate = null;
+		this.navDate.add(num, `month`);
 	}
 
 	formatSelectedDate(format?: string): string {
@@ -90,13 +73,13 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	}
 
 	getDays(): any[] {
-		const firstDay  = moment(this.displayedMonth).startOf(`month`);
-		const lastDay   = moment(this.displayedMonth).endOf(`month`);
+		const firstDay  = moment(this.navDate).startOf(`month`);
+		const lastDay   = moment(this.navDate).endOf(`month`);
 
 		const startEmpty = firstDay.weekday();
 		const lastEmpty  = 6 - lastDay.weekday();
 
-		const gridSize = startEmpty + lastEmpty + moment(this.displayedMonth).daysInMonth();
+		const gridSize = startEmpty + lastEmpty + moment(this.navDate).daysInMonth();
 
 		const list = [];
 
@@ -104,25 +87,23 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 			let day = null;
 
 			if (i < startEmpty) {
-				const lastMonth = moment().utc(this.displayedMonth).subtract(1, `months`);
+				const lastMonth = moment(this.navDate).subtract(1, `months`);
 
 				day = lastMonth.endOf(`month`).subtract(startEmpty - i - 1, `days`);
 			} else if (i >= gridSize - lastEmpty) {
-				const nextMonth = moment().utc(this.displayedMonth).add(1, `months`);
+				const nextMonth = moment(this.navDate).add(1, `months`);
 
 				day = nextMonth.startOf(`month`).add(i - (gridSize - lastEmpty), `days`);
 			} else {
-				day = moment().utc(this.displayedMonth).date(i - startEmpty + 1);
+				day = moment(this.navDate).date(i - startEmpty + 1);
 			}
-
-			console.log('here');
 
 			list.push({
 				value       : day.date(),
 				available   : true,
 				fullDate    : day.toISOString(),
 				isToday     : day.isSame(moment(), `day`) && day.isSame(moment(), `month`),
-				currentMonth: day.isSame(this.displayedMonth, `month`),
+				currentMonth: day.isSame(this.navDate, `month`),
 			});
 		}
 
@@ -153,10 +134,18 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	}
 
 	selectDate(date: string) {
-	  	this.selectedDate = moment(date).toISOString();
+		this.selectedDate = moment(date);
 	}
 
 	selectToday() {
 		this.selectDate(moment().toISOString());
+	}
+
+	clearSelection() {
+		this.selectedDate = null;
+	}
+
+	cancelChanges() {
+		// TODO revert selectedDate to original value
 	}
 }

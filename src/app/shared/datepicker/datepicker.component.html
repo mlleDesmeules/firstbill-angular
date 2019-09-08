@@ -1,6 +1,7 @@
-<input type="text" class="input" (focus)="pickerOpen = true" [formControl]="dateInput">
+<input type="text" class="input" [formControl]="dateInput">
 
-<div class="datetimepicker is-primary is-datetimepicker-default" [class.is-active]="pickerOpen">
+
+<div class="datetimepicker is-active">
     <div class="datetimepicker-container">
 
         <div class="datetimepicker-header is-date-only">
@@ -13,7 +14,6 @@
                         <div class="datetimepicker-selection-date">
                             <div class="datetimepicker-selection-month">
                                 {{ formatSelectedDate('month') }}
-
                             </div>
                             <div class="datetimepicker-selection-weekday">
                                 {{ formatSelectedDate('day') }}
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="datepicker" [class.is-active]="pickerOpen">
+        <div class="datepicker is-active">
             <div class="datepicker-nav">
                 <button type="button" class="datepicker-nav-previous button is-small is-text"
                         (click)="changeNavMonth(-1)">
@@ -33,11 +33,11 @@
 
                 <div class="datepicker-nav-month-year">
                     <div class="datepicker-nav-month">
-                        {{ displayedMonth.format('MMMM') }}
+                        {{ navDate.format('MMMM') }}
                     </div>
                     &nbsp;
                     <div class="datepicker-nav-year">
-                        {{ displayedMonth.format('YYYY') }}
+                        {{ navDate.format('YYYY') }}
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@
             <div class="datepicker-body">
                 <div class="datepicker-dates is-active">
                     <div class="datepicker-weekdays">
-                        <div *ngFor="let day of weekdays" class="datepicker-date">
+                        <div *ngFor="let day of getWeekdays()" class="datepicker-date">
                             {{day}}
                         </div>
                     </div>
