@@ -99,11 +99,9 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 			}
 
 			list.push({
-				value       : day.date(),
-				available   : true,
-				fullDate    : day.toISOString(),
-				isToday     : day.isSame(moment(), `day`) && day.isSame(moment(), `month`),
-				currentMonth: day.isSame(this.navDate, `month`),
+				value    : day.date(),
+				available: true,
+				fullDate : day.toISOString(),
 			});
 		}
 
@@ -121,6 +119,24 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 		return result;
 	}
 
+	/**
+	 * Is Current Month
+	 *
+	 * This method will check if the date passed as argument is a date of the current month. This
+	 * is necessary since the calendar shown will contain dates for the previous and/or next month
+	 * and those numbers should be displayed a bit differently.
+	 */
+	isCurrentMonth(date: string): boolean {
+		return moment(date).isSame(this.navDate, `month`);
+	}
+
+	/**
+	 * Is Selected
+	 *
+	 * This method will return if the date passed as argument is the selected date. So it will
+	 * compare the date, the month and the year to make sure they match, no need to check the
+	 * time since we only care about the date.
+	 */
 	isSelected(date: string): boolean {
 		if (!this.selectedDate) {
 			return false;
@@ -129,6 +145,23 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 		const day   = moment(date).isSame(this.selectedDate, `day`);
 		const month = moment(date).isSame(this.selectedDate, `month`);
 		const year  = moment(date).isSame(this.selectedDate, `year`);
+
+		return (day && month && year);
+	}
+
+	/**
+	 * Is Today
+	 *
+	 * This method will return if the date passed as argument is today. So it will compare the
+	 * date, the month and the year. This type of comparison is necessary since we don't care
+	 * about the specific time.
+	 */
+	isToday(date: string): boolean {
+		const today = moment();
+
+		const day   = moment(date).isSame(today, `day`);
+		const month = moment(date).isSame(today, `month`);
+		const year  = moment(date).isSame(today, `year`);
 
 		return (day && month && year);
 	}

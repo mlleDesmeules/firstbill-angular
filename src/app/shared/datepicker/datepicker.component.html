@@ -57,11 +57,11 @@
 
                     <div class="datepicker-days">
                         <div *ngFor="let date of getDays()" class="datepicker-date"
-                             [class.is-current-month]="date.currentMonth"
+                             [class.is-current-month]="isCurrentMonth(date.fullDate)"
                              [class.is-disabled]="!date.available">
                             <button type="button" class="date-item"
                                     [class.is-active]="isSelected(date.fullDate)"
-                                    [class.is-today]="date.isToday"
+                                    [class.is-today]="isToday(date.fullDate)"
                                     (click)="selectDate(date.fullDate)">
                                 {{ date.value }}
                             </button>
