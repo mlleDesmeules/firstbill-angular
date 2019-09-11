@@ -18,10 +18,10 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
 	pickerOpen = false;
 	dateInput: FormControl;
-	navDate: any;
+	activeMonth: any;
 
-	@Input()
-	_selectedDate: any;
+	// tslint:disable-next-line:variable-name
+	@Input() _selectedDate: any;
 
 	get selectedDate() {
 		return this._selectedDate ? moment(this._selectedDate) : ``;
@@ -29,7 +29,7 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
 	set selectedDate(value: any) {
 		this._selectedDate = value;
-		this.dateInput.setValue(this.formatSelectedDate());
+		this.dateInput.setValue(this.formatDate(this._selectedDate, `DD/MM/YYYY`));
 		this.propagateChange(this._selectedDate);
 	}
 
@@ -38,7 +38,7 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	constructor() { }
 
 	ngOnInit() {
-		this.navDate   = moment();
+		this.activeMonth   = moment();
 		this.dateInput = new FormControl(``);
 	}
 
@@ -52,35 +52,26 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
 	registerOnTouched() {}
 
-	changeNavMonth(num: number) {
-		this.navDate.add(num, `month`);
+	changeActiveMonth(num: number) {
+		this.activeMonth.add(num, `month`);
 	}
 
-	formatSelectedDate(format?: string): string {
-		if (!this.selectedDate) {
-			return format === `date` ? `-` : ``;
+	formatDate(date: any, format?: string): string {
+		if (!date) {
+			return ``;
 		}
 
-		switch (format) {
-			case `date`:
-				return this.selectedDate.format(`DD`);
-			case `month`:
-				return this.selectedDate.format(`MMMM YYYY`);
-			case `day`:
-				return this.selectedDate.format(`dddd`);
-			default:
-				return this.selectedDate.format(`DD/MM/YYYY`);
-		}
+		return moment(date).format(format);
 	}
 
-	getDays(): any[] {
-		const firstDay  = moment(this.navDate).startOf(`month`);
-		const lastDay   = moment(this.navDate).endOf(`month`);
+	getDays(): {date: string, available: boolean}[] {
+		const firstDay  = moment(this.activeMonth).startOf(`month`);
+		const lastDay   = moment(this.activeMonth).endOf(`month`);
 
 		const startEmpty = firstDay.weekday();
 		const lastEmpty  = 6 - lastDay.weekday();
 
-		const gridSize = startEmpty + lastEmpty + moment(this.navDate).daysInMonth();
+		const gridSize = startEmpty + lastEmpty + moment(this.activeMonth).daysInMonth();
 
 		const list = [];
 
@@ -88,21 +79,20 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 			let day = null;
 
 			if (i < startEmpty) {
-				const lastMonth = moment(this.navDate).subtract(1, `months`);
+				const lastMonth = moment(this.activeMonth).subtract(1, `months`);
 
 				day = lastMonth.endOf(`month`).subtract(startEmpty - i - 1, `days`);
 			} else if (i >= gridSize - lastEmpty) {
-				const nextMonth = moment(this.navDate).add(1, `months`);
+				const nextMonth = moment(this.activeMonth).add(1, `months`);
 
 				day = nextMonth.startOf(`month`).add(i - (gridSize - lastEmpty), `days`);
 			} else {
-				day = moment(this.navDate).date(i - startEmpty + 1);
+				day = moment(this.activeMonth).date(i - startEmpty + 1);
 			}
 
 			list.push({
-				value    : day.date(),
+				date : day.toISOString(),
 				available: true,
-				fullDate : day.toISOString(),
 			});
 		}
 
@@ -128,7 +118,7 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	 * and those numbers should be displayed a bit differently.
 	 */
 	isCurrentMonth(date: string): boolean {
-		return moment(date).isSame(this.navDate, `month`);
+		return moment(date).isSame(this.activeMonth, `month`);
 	}
 
 	/**

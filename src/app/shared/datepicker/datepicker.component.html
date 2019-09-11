@@ -1,6 +1,5 @@
 <input type="text" class="input" [formControl]="dateInput" (click)="pickerOpen = true">
 
-
 <div class="datetimepicker is-primary is-datetimepicker-default" [class.is-active]="pickerOpen">
     <div class="datetimepicker-container">
 
@@ -9,14 +8,14 @@
                 <div class="datetimepicker-selection-start is-centered">
                     <div class="datetimepicker-selection-wrapper">
                         <div class="datetimepicker-selection-day">
-                            {{ formatSelectedDate('date') }}
+                            {{ formatDate(selectedDate, 'DD') || '-' }}
                         </div>
                         <div class="datetimepicker-selection-date">
                             <div class="datetimepicker-selection-month">
-                                {{ formatSelectedDate('month') }}
+                                {{ formatDate(selectedDate, 'MMMM YYYY') }}
                             </div>
                             <div class="datetimepicker-selection-weekday">
-                                {{ formatSelectedDate('day') }}
+                                {{ formatDate(selectedDate, 'dddd') }}
                             </div>
                         </div>
                     </div>
@@ -27,22 +26,22 @@
         <div class="datepicker is-active">
             <div class="datepicker-nav">
                 <button type="button" class="datepicker-nav-previous button is-small is-text"
-                        (click)="changeNavMonth(-1)">
+                        (click)="changeActiveMonth(-1)">
                     <i class="fa fa-chevron-left"></i>
                 </button>
 
                 <div class="datepicker-nav-month-year">
                     <div class="datepicker-nav-month">
-                        {{ navDate.format('MMMM') }}
+                        {{ formatDate(activeMonth, 'MMMM') }}
                     </div>
                     &nbsp;
                     <div class="datepicker-nav-year">
-                        {{ navDate.format('YYYY') }}
+                        {{ formatDate(activeMonth, 'YYYY') }}
                     </div>
                 </div>
 
                 <button type="button" class="datepicker-nav-next button is-small is-text"
-                        (click)="changeNavMonth(1)">
+                        (click)="changeActiveMonth(1)">
                     <i class="fa fa-chevron-right"></i>
                 </button>
             </div>
@@ -56,14 +55,14 @@
                     </div>
 
                     <div class="datepicker-days">
-                        <div *ngFor="let date of getDays()" class="datepicker-date"
-                             [class.is-current-month]="isCurrentMonth(date.fullDate)"
-                             [class.is-disabled]="!date.available">
+                        <div *ngFor="let day of getDays()" class="datepicker-date"
+                             [class.is-current-month]="isCurrentMonth(day.date)"
+                             [class.is-disabled]="!day.available">
                             <button type="button" class="date-item"
-                                    [class.is-active]="isSelected(date.fullDate)"
-                                    [class.is-today]="isToday(date.fullDate)"
-                                    (click)="selectDate(date.fullDate)">
-                                {{ date.value }}
+                                    [class.is-active]="isSelected(day.date)"
+                                    [class.is-today]="isToday(day.date)"
+                                    (click)="selectDate(day.date)">
+                                {{ formatDate(day.date, 'DD') }}
                             </button>
                         </div>
                     </div>
