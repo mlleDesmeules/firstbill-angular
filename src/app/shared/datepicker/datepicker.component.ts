@@ -16,6 +16,8 @@ import * as moment from 'moment';
 })
 export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
+	private originalDate: any = null;
+
 	pickerOpen = false;
 	dateInput: FormControl;
 	activeMonth: any;
@@ -30,6 +32,11 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	set selectedDate(value: any) {
 		this._selectedDate = value;
 		this.dateInput.setValue(this.formatDate(this._selectedDate, `DD/MM/YYYY`));
+
+		if (!this.originalDate) {
+			this.originalDate = value;
+		}
+
 		this.propagateChange(this._selectedDate);
 	}
 
@@ -52,10 +59,22 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
 	registerOnTouched() {}
 
+	/**
+	 * Change active month
+	 *
+	 * This method will change the active month which will trigger a change in the
+	 * list of days to be displayed.
+	 */
 	changeActiveMonth(num: number) {
 		this.activeMonth.add(num, `month`);
 	}
 
+	/**
+	 * Format date
+	 *
+	 * This method will get the date passed as argument and format it to get it either
+	 * in the proper format or only a part of the date.
+	 */
 	formatDate(date: any, format?: string): string {
 		if (!date) {
 			return ``;
@@ -99,6 +118,12 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 		return list;
 	}
 
+	/**
+	 * Get weekdays
+	 *
+	 * This method will get every weekday abbreviation and in the correct order depending
+	 * on the locale.
+	 */
 	getWeekdays(): string[] {
 		const list: number[]   = [0, 1, 2, 3, 4, 5, 6];
 		const result: string[] = [];
@@ -157,19 +182,40 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 		return (day && month && year);
 	}
 
+	/**
+	 * Select date
+	 *
+	 * This method will set the date passed as argument as the selected date.
+	 */
 	selectDate(date: string) {
 		this.selectedDate = moment(date);
 	}
 
+	/**
+	 * Select today
+	 *
+	 * This method will set today as the selected date.
+	 */
 	selectToday() {
 		this.selectDate(moment().toISOString());
 	}
 
+	/**
+	 * Clear selection
+	 *
+	 * This method will remove any date from the selection.
+	 */
 	clearSelection() {
 		this.selectedDate = null;
 	}
 
+	/**
+	 * Cancel changes
+	 *
+	 * This method will close the picker and set the selected date back to it's original value.
+	 */
 	cancelChanges() {
-		// TODO revert selectedDate to original value
+		this.pickerOpen   = false;
+		this.selectedDate = this.originalDate;
 	}
 }
