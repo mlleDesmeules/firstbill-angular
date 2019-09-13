@@ -57,7 +57,8 @@
                     <div class="datepicker-days">
                         <div *ngFor="let day of getDays()" class="datepicker-date"
                              [class.is-current-month]="isCurrentMonth(day.date)"
-                             [class.is-disabled]="!day.available">
+                             [class.is-disabled]="!day.available"
+                             [attr.data-date]="day.date">
                             <button type="button" class="date-item"
                                     [class.is-active]="isSelected(day.date)"
                                     [class.is-today]="isToday(day.date)"

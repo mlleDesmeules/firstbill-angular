@@ -189,6 +189,10 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	 */
 	selectDate(date: string) {
 		this.selectedDate = moment(date);
+
+		const monthDiff = this.selectedDate.get(`month`) - this.activeMonth.get(`month`);
+
+		this.changeActiveMonth(monthDiff);
 	}
 
 	/**
