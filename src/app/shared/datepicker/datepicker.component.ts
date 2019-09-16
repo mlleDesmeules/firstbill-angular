@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -42,7 +42,34 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 
 	propagateChange = (_: any) => {};
 
-	constructor() { }
+	@HostListener(`document:click`, [`$event.target`])
+	close(targetElement) {
+		if (targetElement === null) {
+			this.pickerOpen = false;
+			return;
+		}
+
+		if (this.elementRef.nativeElement.contains(targetElement)) {
+			return;
+		}
+
+		let insideDatepicker = false;
+
+		Object.keys(targetElement.parentNode.classList).forEach((key) => {
+			const classes = targetElement.parentNode.classList;
+
+			if (classes[key].indexOf(`datepicker`) > -1 || classes[key].indexOf(`datetimepicker`) > -1) {
+				insideDatepicker = true;
+				return;
+			}
+		});
+
+		if (this.pickerOpen && !insideDatepicker) {
+			this.pickerOpen = false;
+		}
+	}
+
+	constructor(private elementRef: ElementRef) { }
 
 	ngOnInit() {
 		this.activeMonth   = moment();
@@ -219,7 +246,7 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 	 * This method will close the picker and set the selected date back to it's original value.
 	 */
 	cancelChanges() {
-		this.pickerOpen   = false;
 		this.selectedDate = this.originalDate;
+		this.close(null);
 	}
 }
