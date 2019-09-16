@@ -209,6 +209,15 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
 		return (day && month && year);
 	}
 
+	openPicker() {
+		if (this.pickerOpen) {
+			return;
+		}
+
+		this.pickerOpen  = true;
+		this.activeMonth = this.selectedDate ? this.selectedDate : moment();
+	}
+
 	/**
 	 * Select date
 	 *
